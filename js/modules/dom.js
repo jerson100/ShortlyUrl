@@ -13,6 +13,8 @@ export const frmSubmit = async () => {
 
         const url = frm[0].value;
 
+        const loader = createLoader();
+
         try {
             
             const data = await ApiUrl.generarURL(url);
@@ -28,6 +30,10 @@ export const frmSubmit = async () => {
             console.error(error);
 
             alert('error'+error);
+
+        } finally{
+
+            loader.remove();
 
         }
 
@@ -92,4 +98,20 @@ const linkEle = ({url, hashid}) => {
 
     return newLink;
 
+};
+
+
+const createLoader = () => {
+    const loader = document.createElement('div');
+    loader.classList.add("fixed__container");
+    loader.innerHTML = `
+        <div class="loader">
+            <span class="loader-inner-1"></span>
+            <span class="loader-inner-2"></span>
+            <span class="loader-inner-3"></span>
+            <span class="loader-inner-4"></span>
+        </div>    
+    `;
+    document.body.appendChild(loader);
+    return loader;
 };
